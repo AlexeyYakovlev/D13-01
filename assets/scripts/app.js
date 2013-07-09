@@ -446,6 +446,7 @@ var App = function () {
         $(".disabled").click(function(){
             return false;
         });
+        $("#questionForm").validationEngine();
         $('.icon-color', panel).click(function () {
             $('.color-mode').show();
             $('.icon-color-close').show();
