@@ -3,7 +3,7 @@
 /**
  * @author Yakovlev
  * @version 1.0
- * Singleton. 
+ * Preferenses (Singleton). 
  * Реализует конфигурацию.
  */
 class Preferences {

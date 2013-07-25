@@ -3,16 +3,31 @@
 /**
  * @author Yakovlev
  * @version 1.0
- * Singleton. 
- * Реализует конфигурацию.
+ * Data Base Handler (Singleton). 
+ * Выборка данных из БД.
  */
 class DBH {
+    /*
+     * @access private
+     * Посредник.
+     */
 
     private static $_mHandler;
+
+    /*
+     * @access private
+     * Конструктор по умолчанию зарещает напрямую создавать экземпляры данного класса.
+     */
 
     private function __construct() {
         
     }
+
+    /*
+     * @access public
+     * Get instanse.
+     * Создаст или вернет экземпляр класса PDO.
+     */
 
     private static function GetHandler() {
         if (!isset(self::$_mHandler)) {
@@ -28,9 +43,21 @@ class DBH {
         return self::$_mHandler;
     }
 
+    /*
+     * @access public
+     * Close connection.
+     * Уничтожает соединение.
+     */
+
     public static function Close() {
         self::$_mHandler = null;
     }
+
+    /*
+     * @access public
+     * Execute query.
+     * Выполняет запрос.
+     */
 
     public static function Execute($sqlQuery, $params = null) {
         try {
@@ -42,6 +69,12 @@ class DBH {
             trigger_error($e->getMessage(), E_USER_ERROR);
         }
     }
+
+    /*
+     * @access public
+     * Get all the results on the query.
+     * Получить все результаты запроса.
+     */
 
     public static function GetAll($sqlQuery, $params = null, $fetchStyle = PDO::FETCH_ASSOC) {
         $result = null;
@@ -57,6 +90,12 @@ class DBH {
         return $result;
     }
 
+    /*
+     * @access public
+     * Get a row of the query result.
+     * Получить строку таблицы результата запроса.
+     */
+
     public static function GetRow($sqlQuery, $params = null, $fetchStyle = PDO::FETCH_ASSOC) {
         $result = null;
         try {
@@ -70,6 +109,12 @@ class DBH {
         }
         return $result;
     }
+
+    /*
+     * @access public
+     * Get a value of the query result.
+     * Получить значение результата запроса.
+     */
 
     public static function GetOne($sqlQuery, $params = null) {
         $result = null;
