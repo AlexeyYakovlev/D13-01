@@ -19,8 +19,6 @@ define('DB_DATABASE', 'D13-01');
 // Строка подключения к БД
 define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
 
-require 'class/DBH.php';
-require 'class/Preferences.php';
 $pref = Preferences::getInstance();
 $sql = "select * from config";
 foreach (DBH::GetAll($sql) as $array) {

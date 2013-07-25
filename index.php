@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 date_default_timezone_set('Europe/Moscow');
 session_start();
 ob_start();
+require 'class/DBH.php';
+require 'class/Preferences.php';
 require 'config.php';
 $conf = Preferences::getInstance();
 print($conf->getProperty("ProjectName"));
