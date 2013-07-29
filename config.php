@@ -3,7 +3,7 @@
 /*
  * Файл конфигурации проекта.
  * @author Yakovlev
- * @version 1.1
+ * @version 1.2
  */
 
 /* НАСТРОЙКИ БАЗ ДАННЫХ */
@@ -32,24 +32,34 @@ foreach (DBH::GetAll($sql) as $array) {
 define('PROJECT_NUMBER', $pref->getProperty('ProjectNumber'));
 
 /* ПУТИ */
-// Корень сайта
+// Корень проекта
 define('ROOT_DIR', dirname(__FILE__) . "/");
+// Корень админ панели
+define('ADMIN_DIR', ROOT_DIR . "/admin/");
+// Путь к каталогу статистики по проекту
+define('STATUS_DIR', ROOT_DIR . "/status/");
+// Путь к каталогу портала
+define('PORTAL_DIR', ROOT_DIR . "/portal/");
 // Путь к каталогу библиотеки классов
 define('CLASS_DIR', ROOT_DIR . 'class/');
-// Относительный путь
-define('VIRTUAL_ROOT_DIR', "/projects/");
-// Путь к каталогу шаблонов
+// Относительный путь проекта
+define('VIRTUAL_ROOT_DIR', "/projects/" . PROJECT_NUMBER . "/");
+// Относительный путь админ панели
+define('ADMIN_VIRTUAL_DIR', VIRTUAL_ROOT_DIR . "admin/");
+// Путь к каталогу шаблонов проекта
 define('PRESENTATION_DIR', ROOT_DIR . 'templates/');
-// Относительный путь к каталогу шаблонов
+// Путь к каталогу шаблонов админ панели
+define('ADMIN_PRESENTATION_DIR', ADMIN_DIR . 'templates/');
+// Относительный путь к каталогу шаблонов проекта
 define('VIRTUAL_TEMPLATE_DIR', VIRTUAL_ROOT_DIR . "templates/");
+// Относительный путь к каталогу шаблонов админ панели
+define('ADMIN_VIRTUAL_TEMPLATE_DIR', ADMIN_VIRTUAL_DIR . "templates/");
 // Путь к библиотеке Smarty
 define('SMARTY_DIR', CLASS_DIR . 'smarty/');
-// Путь к каталогу шаблона
-define('TEMPLATE_DIR', PRESENTATION_DIR);
-// Путь к каталогу кеша шаблона
+// Путь к каталогу скомпилированного шаблона проекта
 define('COMPILE_DIR', ROOT_DIR . 'templates_c/');
-// Путь к каталогу конфигураций
-define('CONFIG_DIR', ROOT_DIR . 'configs/');
+// Путь к каталогу скомпилированного шаблона админ панели
+define('COMPILE_DIR', ADMIN_DIR . 'templates_c/');
 // Путь к логам ошибок
 define('LOG_ERROR_FILE', ROOT_DIR . 'logs/error.log');
 
