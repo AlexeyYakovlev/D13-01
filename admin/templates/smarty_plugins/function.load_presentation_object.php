@@ -2,7 +2,7 @@
 
 function smarty_function_load_presentation_object($params, $smarty) {
     if (isset($params['dir']))
-        require_once PRESENTATION_DIR . $params['dir'] . $params['filename'] . '.php';
+        require_once ADMIN_PRESENTATION_DIR . "tplClass/" . $params['filename'] . '.php';
     else
         require_once PRESENTATION_DIR . $params['filename'] . '.php';
     $className = str_replace(' ', '', ucfirst(str_replace('_', ' ', $params['filename'])));
