@@ -3,7 +3,7 @@
 /*
  * Файл конфигурации проекта.
  * @author Yakovlev
- * @version 1.2
+ * @version 1.3
  */
 
 /* НАСТРОЙКИ БАЗ ДАННЫХ */
@@ -59,9 +59,11 @@ define('SMARTY_DIR', CLASS_DIR . 'smarty/');
 // Путь к каталогу скомпилированного шаблона проекта
 define('COMPILE_DIR', ROOT_DIR . 'templates_c/');
 // Путь к каталогу скомпилированного шаблона админ панели
-define('COMPILE_DIR', ADMIN_DIR . 'templates_c/');
+define('ADMIN_COMPILE_DIR', ADMIN_DIR . 'templates_c/');
 // Путь к логам ошибок
 define('LOG_ERROR_FILE', ROOT_DIR . 'logs/error.log');
+// Путь к файлам конфигурации
+define('CONFIG_DIR', '');
 
 /* СИСТЕМНЫЕ НАСТРОЙКИ */
 // Включать ли обработчкик ошибок при фатальных ошибках (true вкл, false выкл)
