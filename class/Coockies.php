@@ -15,7 +15,7 @@ class Coockies {
      */
 
     static function install($variable, $value, $period = 1987200) {
-        setcookie($variable, $value);
+        setcookie($variable, $value, $period);
     }
 
     /*
@@ -26,7 +26,7 @@ class Coockies {
      */
 
     static function uninstall($variable, $value, $period = 1987200) {
-        setcookie($variable, $value);
+        setcookie($variable, $value, $period);
     }
 
     /*
