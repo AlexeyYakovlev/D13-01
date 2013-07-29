@@ -12,6 +12,7 @@ ob_start();
 require_once '../class/DBH.php';
 require_once '../class/Preferences.php';
 require_once '../config.php';
+require_once '../class/Coockies.php';
 $conf = Preferences::getInstance();
 require_once ADMIN_DIR . '/templates/application.php';
 $application = new Application();
