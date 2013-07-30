@@ -95,20 +95,20 @@ class Core {
      *
      * Пример №1:<br>
      * <code>
-     * // Загрузка класса classes/My/Class/Name.php
+     * // Загрузка класса class/My/Class/Name.php
      * Core::auto_load('My_Class_Name');
      * </code>
      *
      * Пример №2:<br>
      * <code>
-     * // Загрузка класса не из стандартной дирректории, из дирректории vendor
+     * // Загрузка класса не из стандартной директории, из директории vendor
      * // Следующий код ищет My/Class/Name.php в папке vendor
-     * Kohana::auto_load('My_Class_Name', 'vendor');
+     * Core::auto_load('My_Class_Name', 'vendor');
      * </code>
      *
      * В принципе нет видимых причин для использования этого метода напрямую.
      * Вместо этого достаточно обратиться к классу по его имени, например
-     * My_Class_Name::function(...) и это приведёт к вызову этого метода.
+     * Name::function(...) и это приведёт к вызову этого метода.
      *
      * Для того, чтоб этот метод нормально работал, следует до метода
      * Core::init, вызывать spl_autoload_register(array('Core', 'auto_load'))
