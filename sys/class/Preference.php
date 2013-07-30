@@ -3,7 +3,7 @@
 /**
  * @author Yakovlev
  * @version 1.0
- * Preferenses (Singleton). 
+ * Preferenses (Singleton).
  * Реализует конфигурацию.
  */
 class Preference {
@@ -26,7 +26,7 @@ class Preference {
      */
 
     private function __construct() {
-        
+
     }
 
     /*
