@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Date Static Class
+ * Date Class
  *
  * Дата, время и всё с этим связанное
  *
  * @package  Survey\Date
  * @author   Yakovlev
- * @version  1.0
+ * @version  1.0.0
  */
 class Date {
-    // год
 
+    // год
     const YEAR = 31556926;
     // месяц
     const MONTH = 2629744;
@@ -23,7 +23,5 @@ class Date {
     const HOUR = 3600;
     // минута
     const MINUTE = 60;
-
 }
 
-?>

@@ -7,13 +7,14 @@
 
     /**
      * Уровень ошибок для PHP
-     * @see  http://php.net/error_reporting
+     * @link  http://php.net/error_reporting
      *
      * В продакшене использовать: E_ALL ^ E_NOTICE
      * На локальной машине использовать: E_ALL | E_STRICT
      * Для использования устаревших вещей из PHP >= 5.3: E_ALL & ~E_DEPRECATED
      */
     error_reporting(E_ALL | E_STRICT);
+    ini_set('display_errors', 'yes');
 
     // Полный путь к корню документов
     define('DOCROOT', realpath(dirname(__FILE__)).DIRECTORY_SEPARATOR);

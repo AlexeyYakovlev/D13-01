@@ -7,23 +7,21 @@
  *
  * @package  Survey\Cookie
  * @author   Yakovlev
- * @version  1.0.1
+ * @version  1.0.2
  */
 class Cookie {
 
     /**
      * Соль для генерации куков
-     * @todo Значение этого параметра нужно вынести в конфиг
      * @var string
      */
-    public static $salt = 'gj8GH53koksw90wenmnkHHHUj2478';
+    public static $salt = NULL;
 
     /**
      * Количество секунд по умолчанию
-     * @todo Значение этого параметра нужно вынести в конфиг
      * @var integer
      */
-    public static $expiration = 1987200;
+    public static $expiration = 0;
 
     /**
      * Ограничение пути для куки
@@ -33,10 +31,9 @@ class Cookie {
 
     /**
      * Ограничение домена для куки
-     * @todo Значение этого параметра должно формироваться вначале
      * @var string
      */
-    public static $domain = 'www.site.com';
+    public static $domain = NULL;
 
     /**
      * Защищённое хранение
