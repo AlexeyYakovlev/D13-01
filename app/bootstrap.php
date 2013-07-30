@@ -27,7 +27,7 @@
      * Соль для генерации куков
      * @var string
      */
-    Cookie::$salt = 'e41eb68d5605ebcc01424519da854';
+    Cookie::$salt = Preference::getInstance()->getgetProperty("Salt");
 
     /**
      * Ограничение домена для куки

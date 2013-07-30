@@ -6,7 +6,7 @@
  * Preferenses (Singleton). 
  * Реализует конфигурацию.
  */
-class Preferences {
+class Preference {
     /*
      * @access private
      * Массив, который будет содержать все данные настроек.
@@ -37,7 +37,7 @@ class Preferences {
 
     public static function getInstance() {
         if (empty(self::$instance)) {
-            self::$instance = new Preferences();
+            self::$instance = new Preference();
         }
         return self::$instance;
     }
