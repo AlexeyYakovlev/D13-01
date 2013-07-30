@@ -116,4 +116,3 @@ define('MAIL_PRIORITY', 1);
 define('MAIL_CHARSET', 'utf-8');
 // Дректива для php о отправителе
 ini_set('sendmail_from', SENDMAIL_FROM);
-?>
