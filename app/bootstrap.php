@@ -1,4 +1,6 @@
 <?php
+    // Подгружаем ядро
+    require DOCROOT.'classes/Core.php';
 
     ini_set('memory_limit', '16000M');
     ini_set('max_execution_time', 0);
@@ -16,6 +18,11 @@
      * @link http://www.php.net/manual/function.setlocale
      */
     setlocale(LC_ALL, 'ru_RU.utf-8');
+
+    /**
+     * Инициализация ядра
+     */
+    Core::init();
 
     /**
      * Время жизни куки
