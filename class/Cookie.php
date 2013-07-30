@@ -70,6 +70,10 @@ class Cookie {
             $expiration = Cookie::$expiration;
         }
 
+        if ($expiration !== 0) {
+            $expiration += time();
+        }
+
         // Добавляяем соль к значению куки
         $value = Cookie::getSalt($name, $value).'~'.$value;
 
