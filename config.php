@@ -64,6 +64,8 @@ define('ADMIN_COMPILE_DIR', ADMIN_DIR . 'templates_c/');
 define('LOG_ERROR_FILE', ROOT_DIR . 'logs/error.log');
 // Путь к файлам конфигурации
 define('CONFIG_DIR', '');
+// Ограничение пути для куки
+define('COOKIEPATH', '/');
 
 /* СИСТЕМНЫЕ НАСТРОЙКИ */
 // Включать ли обработчкик ошибок при фатальных ошибках (true вкл, false выкл)
@@ -84,6 +86,16 @@ define('SEND_ERROR_MAIL', false);
 define('UNDER_CONSTRUCTION', false);
 // Страница ошибки по умолчанию
 define('ERROR_PAGE', "ToIndex");
+
+/* НАСТРОЙКИ КУК */
+// Время жизни куки по умолчанию
+define('COOKIELIVETIME', 1987200);
+// Ограничение домена для куки
+define('COOKIEDOMAIN', 'www.radar-survey.ru');
+// Защищенное хранение кук
+define('COOKIESECURE', false);
+// Передавать куки только по HTTP, отключение JavaScript доступа
+define('COOKIEHTTPONLY', false);
 
 /* ПОЧТОВЫЕ НАСТРОЙКИ */
 // Административный почтовый ящик

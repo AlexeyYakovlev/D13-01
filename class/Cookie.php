@@ -12,43 +12,10 @@
 class Cookie {
 
     /**
-     * Соль для генерации куков
-     * @todo Значение этого параметра нужно вынести в конфиг
-     * @var string
-     */
-    public static $salt = 'gj8GH53koksw90wenmnkHHHUj2478';
-
-    /**
      * Количество секунд по умолчанию
-     * @todo Значение этого параметра нужно вынести в конфиг
      * @var integer
      */
-    public static $expiration = 1987200;
-
-    /**
-     * Ограничение пути для куки
-     * @var string
-     */
-    public static $path = '/';
-
-    /**
-     * Ограничение домена для куки
-     * @todo Значение этого параметра должно формироваться вначале
-     * @var string
-     */
-    public static $domain = 'www.site.com';
-
-    /**
-     * Защищённое хранение
-     * @var boolean
-     */
-    public static $secure = FALSE;
-
-    /**
-     * Передавать куки только по HTTP, отключение JavaScript доступа
-     * @var boolean
-     */
-    public static $httponly = FALSE;
+    public static $expiration = COOKIELIVETIME;
 
     /**
      * Установка куки
@@ -75,9 +42,9 @@ class Cookie {
         }
 
         // Добавляяем соль к значению куки
-        $value = Cookie::getSalt($name, $value).'~'.$value;
+        $value = Cookie::getSalt($name, $value) . '~' . $value;
 
-        return setcookie($name, $value, $expiration, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
+        return setcookie($name, $value, $expiration, COOKIEPATH, COOKIEDOMAIN, COOKIESECURE, COOKIEHTTPONLY);
     }
 
     /**
@@ -98,14 +65,14 @@ class Cookie {
         // Из этого класса значение соли нужно убрать, а где нибудь в
         // инициализирующем месте соль нужно назначать, например так:
         // Cookies::$salt = 'skdjfhskuSKLDIFU39VJN4Ikdfjh';
-        if ( ! Cookie::$salt) {
+        if (!Preferences::getInstance()->getProperty("Salt")) {
             throw new Exception('Требуется правильная соль для кукисов. Пожалуйста установите Cookies::$salt на начальном этапе!');
         }
 
         // Определяем юзер-агента
         $agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';
 
-        return hash_hmac('sha1', $agent.$name.$value.Cookie::$salt, Cookie::$salt);
+        return hash_hmac('sha1', $agent . $name . $value . Preferences::getInstance()->getProperty("Salt"), Preferences::getInstance()->getProperty("Salt"));
     }
 
     /**
@@ -128,7 +95,7 @@ class Cookie {
      * @return  string
      */
     public static function get($key, $default = NULL) {
-        if ( ! isset($_COOKIE[$key])) {
+        if (!isset($_COOKIE[$key])) {
             // Если куки нет, вернём значение по умолчанию
             return $default;
         }
@@ -173,7 +140,7 @@ class Cookie {
         unset($_COOKIE[$name]);
 
         // Помещаяет в куку NULL и делает её старой
-        return setcookie($name, NULL, time() - 1, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
+        return setcookie($name, NULL, time() - 1, COOKIEPATH, COOKIEDOMAIN, COOKIESECURE, COOKIEHTTPONLY);
     }
 
 }
