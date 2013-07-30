@@ -63,10 +63,7 @@
     //session_start();
     //ob_start(); // это переехало в ядро
 
-    // содержимое этого файла нужно пере-распределисть
-    require 'config.php';
-
-    $conf = Preferences::getInstance();
+    $conf = Preference::getInstance();
     print($conf->getProperty("ProjectName"));
 
     //flush();

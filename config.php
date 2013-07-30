@@ -21,7 +21,7 @@ define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
 
 /* НАСТРОЙКИ ПРОЕКТА */
 //инициализация ссылки на объект Preferences
-$pref = Preferences::getInstance();
+$pref = Preference::getInstance();
 //выборка всех параметров настройки из БД
 $sql = "select * from config";
 //установка параметров проекта как свойства объекта Preferences
