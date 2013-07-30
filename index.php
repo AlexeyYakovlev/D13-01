@@ -13,8 +13,6 @@ require 'class/DBH.php';
 require 'class/Preference.php';
 require 'class/Date.php';
 require 'config.php';
-$conf = Preferences::getInstance();
-print($conf->getProperty("ProjectName"));
 flush();
 ob_flush();
 ob_end_clean();
