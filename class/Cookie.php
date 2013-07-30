@@ -173,7 +173,7 @@ class Cookie {
         unset($_COOKIE[$name]);
 
         // Помещаяет в куку NULL и делает её старой
-        return setcookie($name, NULL, -86400, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
+        return setcookie($name, NULL, time() - 1, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
     }
 
 }
