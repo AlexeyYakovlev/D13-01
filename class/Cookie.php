@@ -104,29 +104,72 @@ class Cookie {
         return hash_hmac('sha1', $agent.$name.$value.Cookie::$salt, Cookie::$salt);
     }
 
-    /*
-     * @var $variable string
-     * @var $value string
-     * @var $expiration int
-     * Удаляет куки.
+    /**
+     * Получение подписанной куки
+     *
+     * Неподписанные куки не будут возвращаться.
+     * Метод Cookie::set подписывает кукисы с помощью Cookie::getSalt.
+     * Если всё же кука подписана, но испорчена, то она удаляется.
+     * Зачем нам хранить порченные куки?:)
+     *
+     * Пример:<br>
+     * <code>
+     * // Получение куки "theme", или "blue" по умолчанию, если "theme" нет
+     * $theme = Cookie::get('theme', 'blue');
+     * </code>
+     *
+     * @param   string  $key      Имя куки
+     * @param   mixed   $default  Значение по умолчанию [Optional]
+     *
+     * @return  string
      */
+    public static function get($key, $default = NULL) {
+        if ( ! isset($_COOKIE[$key])) {
+            // Если куки нет, вернём значение по умолчанию
+            return $default;
+        }
+        // Получаем значение куки
+        $cookie = $_COOKIE[$key];
 
-    static function uninstall($variable, $value, $expiration = 1987200) {
-        setcookie($variable, $value, time() - $period);
+        // Находим положение разделения между солью и содержимым куки
+        $split = strlen(Cookie::getSalt($key, NULL));
+
+        if (isset($cookie[$split]) AND $cookie[$split] === '~') {
+            // Разделяем соль и значение куки
+            list ($hash, $value) = explode('~', $cookie, 2);
+
+            if (Cookie::getSalt($key, $value) === $hash) {
+                // Подпись куки верна, возвращаем значение
+                return $value;
+            }
+
+            // Подпись куки не верна, удаляем куку
+            Cookie::delete($key);
+        }
+
+        return $default;
     }
 
-    /*
-     * @var $variable string
-     * @var $value string
-     * @var $period int
-     * Возвращает куки если они есть.
+    /**
+     * Удаляет куку
+     *
+     * Помещаяет в куку NULL и делает её старой
+     *
+     * Пример:<br>
+     * <code>
+     * Cookie::delete('theme');
+     * </code>
+     *
+     * @param   string  $name  Имя куки
+     *
+     * @return  boolean
      */
+    public static function delete($name) {
+        // Удаляем куку
+        unset($_COOKIE[$name]);
 
-    static function get($variable) {
-        if (isset($_COOKIE[$variable]))
-            return $_COOKIE[$variable];
-        else
-            return false;
+        // Помещаяет в куку NULL и делает её старой
+        return setcookie($name, NULL, -86400, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
     }
 
 }
