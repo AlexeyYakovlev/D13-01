@@ -63,9 +63,6 @@
     //session_start();
     //ob_start(); // это переехало в ядро
 
-    $conf = Preference::getInstance();
-    print($conf->getProperty("ProjectName"));
-
     //flush();
     //ob_flush();
     //ob_end_clean();
