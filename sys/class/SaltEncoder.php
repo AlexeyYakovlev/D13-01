@@ -5,7 +5,7 @@
  *
  * Шифрование соли.
  * 
- * @package  Survey\Cookie
+ * @package  Survey\Salt
  * @author   Yakovlev
  * @version  1.0.0
  */

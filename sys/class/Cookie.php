@@ -4,9 +4,11 @@
  * Cookie Manager
  *
  * Установка удаление кук.
- * 
- * @todo класс делает слишком много.
- *  Рерганизовать таким образом, чтоб он четко отвечал интерфейсу DMOM (чтение, запись, удаление).
+ * Используется совместно с:
+ *      ¤ Salt Manager
+ *      ¤ Salt Encoder
+ *      ¤ Cookie Salt Manager
+ *      ¤ Cookie Salt Encoder
  * 
  * @package  Survey\Cookie
  * @author   Yakovlev
