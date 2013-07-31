@@ -4,10 +4,13 @@
  * Cookie Manager
  *
  * Установка удаление кук.
- *
+ * 
+ * @todo класс делает слишком много.
+ *  Рерганизовать таким образом, чтоб он четко отвечал интерфейсу DMOM (чтение, запись, удаление).
+ * 
  * @package  Survey\Cookie
  * @author   Yakovlev
- * @version  1.0.2
+ * @version  1.0.3
  */
 class Cookie {
 
@@ -48,6 +51,32 @@ class Cookie {
     public static $httponly = FALSE;
 
     /**
+     * Запрос времени жизни куки
+     *
+     * Пример:<br>
+     * <code>
+     * Cookie::getExpiration();
+     * </code>
+     * @access private
+     * @param   integer  $expiration  Время жизни в секундах [Optional]
+     *
+     * @return  int
+     */
+    private static function getExpiration($expiration) {
+        if (is_null($expiration)) {
+            // Используем время жизни по умолчанию
+            $expiration = Cookie::$expiration;
+        }
+
+        if ($expiration !== 0) {
+            $expiration += time();
+        } else {
+            throw new Exception('Время жизни куки не инициализировано. Укажите времмя жизни куки в Cookie::$expiration в bootstrap.php');
+        }
+        return $expiration;
+    }
+
+    /**
      * Установка куки
      *
      * Пример:<br>
@@ -62,19 +91,13 @@ class Cookie {
      * @return  boolean
      */
     public static function set($name, $value, $expiration = NULL) {
-        if (is_null($expiration)) {
-            // Используем время жизни по умолчанию
-            $expiration = Cookie::$expiration;
-        }
+        /* Добавляяем соль к значению куки
+         * @todo все соли вынести в отдельный класс. 
+         * @todo формирование формата соли вынести в отдельный метод.
+         */
+        $value = Cookie::getSalt($name, $value) . '~' . $value;
 
-        if ($expiration !== 0) {
-            $expiration += time();
-        }
-
-        // Добавляяем соль к значению куки
-        $value = Cookie::getSalt($name, $value).'~'.$value;
-
-        return setcookie($name, $value, $expiration, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
+        return setcookie($name, $value, Cookie::getExpiration($expiration), Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
     }
 
     /**
@@ -95,14 +118,16 @@ class Cookie {
         // Из этого класса значение соли нужно убрать, а где нибудь в
         // инициализирующем месте соль нужно назначать, например так:
         // Cookies::$salt = 'skdjfhskuSKLDIFU39VJN4Ikdfjh';
-        if ( ! Cookie::$salt) {
+        if (!Cookie::$salt) {
             throw new Exception('Требуется правильная соль для кукисов. Пожалуйста установите Cookies::$salt на начальном этапе!');
         }
 
-        // Определяем юзер-агента
+        /* Определяем юзер-агента
+         * @todo вынести алгоритм выявления агента в отдельный метод отдельного класса.
+         */
         $agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';
 
-        return hash_hmac('sha1', $agent.$name.$value.Cookie::$salt, Cookie::$salt);
+        return hash_hmac('sha1', $agent . $name . $value . Cookie::$salt, Cookie::$salt);
     }
 
     /**
@@ -125,7 +150,7 @@ class Cookie {
      * @return  string
      */
     public static function get($key, $default = NULL) {
-        if ( ! isset($_COOKIE[$key])) {
+        if (!isset($_COOKIE[$key])) {
             // Если куки нет, вернём значение по умолчанию
             return $default;
         }
