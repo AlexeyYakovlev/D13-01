@@ -3,7 +3,7 @@
     require SYSPATH.'class/Core.php';
 
 
-    ini_set('memory_limit', '16000M');
+    ini_set('memory_limit', '1024M');
     ini_set('max_execution_time', 0);
     ini_set('session.gc_maxlifetime', 1800);
     ini_set('session.cookie_lifetime', 1800);
@@ -58,4 +58,4 @@
      * Ограничение домена для куки
      * @var string
      */
-    Cookie::$domain = 'www.site.com';
+    Cookie::$domain = Preference::getInstance()->getProperty("SiteUrl");
