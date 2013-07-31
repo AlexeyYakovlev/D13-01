@@ -91,43 +91,13 @@ class Cookie {
      * @return  boolean
      */
     public static function set($name, $value, $expiration = NULL) {
-        /* Добавляяем соль к значению куки
-         * @todo все соли вынести в отдельный класс. 
-         * @todo формирование формата соли вынести в отдельный метод.
+        /*
+         * Добавляяем соль к значению куки
          */
-        $value = Cookie::getSalt($name, $value) . '~' . $value;
-
+        $salt = new CookieSaltEncoder($name, $value);
+        $value = $salt->encode() . '~' . $value;
+        unset($salt);
         return setcookie($name, $value, Cookie::getExpiration($expiration), Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
-    }
-
-    /**
-     * Генерирует строку соли для куков основываясь на имени куки и её значении
-     *
-     * Пример:<br>
-     * <code>
-     * $salt = Cookie::getSalt('theme', 'red');
-     * </code>
-     *
-     * @param   string  $name   Имя куки
-     * @param   string  $value  Значение куки
-     *
-     * @return  string
-     */
-    public static function getSalt($name, $value) {
-        // Требуем соль
-        // Из этого класса значение соли нужно убрать, а где нибудь в
-        // инициализирующем месте соль нужно назначать, например так:
-        // Cookies::$salt = 'skdjfhskuSKLDIFU39VJN4Ikdfjh';
-        if (!Cookie::$salt) {
-            throw new Exception('Требуется правильная соль для кукисов. Пожалуйста установите Cookies::$salt на начальном этапе!');
-        }
-
-        /* Определяем юзер-агента
-         * @todo вынести алгоритм выявления агента в отдельный метод отдельного класса.
-         */
-        $agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : 'unknown';
-
-        return hash_hmac('sha1', $agent . $name . $value . Cookie::$salt, Cookie::$salt);
     }
 
     /**
@@ -150,21 +120,22 @@ class Cookie {
      * @return  string
      */
     public static function get($key, $default = NULL) {
+        $salt = new CookieSaltEncoder(NULL, NULL);
         if (!isset($_COOKIE[$key])) {
             // Если куки нет, вернём значение по умолчанию
             return $default;
         }
         // Получаем значение куки
         $cookie = $_COOKIE[$key];
-
+        $salt->name = $key;
         // Находим положение разделения между солью и содержимым куки
-        $split = strlen(Cookie::getSalt($key, NULL));
+        $split = strlen($salt->encode());
 
         if (isset($cookie[$split]) AND $cookie[$split] === '~') {
             // Разделяем соль и значение куки
             list ($hash, $value) = explode('~', $cookie, 2);
-
-            if (Cookie::getSalt($key, $value) === $hash) {
+            $salt->value = $value;
+            if ($salt->encode() === $hash) {
                 // Подпись куки верна, возвращаем значение
                 return $value;
             }
@@ -172,7 +143,7 @@ class Cookie {
             // Подпись куки не верна, удаляем куку
             Cookie::delete($key);
         }
-
+        unset($salt);
         return $default;
     }
 
