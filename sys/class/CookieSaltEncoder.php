@@ -7,7 +7,7 @@
  * 
  * @package  Survey\Cookie
  * @author   Yakovlev
- * @version  1.0.0
+ * @version  1.0.1
  */
 class CookieSaltEncoder extends SaltEncoder {
 
@@ -17,7 +17,7 @@ class CookieSaltEncoder extends SaltEncoder {
     public $value;
 
     /*
-     * запрещает создание объекта без параметров имени и значение куки
+     * запрещает создание объекта без параметров имени и значения куки
      *
      * @param   string  $name   Имя куки
      * @param   string  $value  Значение куки

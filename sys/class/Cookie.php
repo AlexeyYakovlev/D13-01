@@ -12,7 +12,7 @@
  * 
  * @package  Survey\Cookie
  * @author   Yakovlev
- * @version  1.0.3
+ * @version  1.0.4
  */
 class Cookie {
 
@@ -92,13 +92,11 @@ class Cookie {
      *
      * @return  boolean
      */
-    public static function set($name, $value, $expiration = NULL) {
+    public static function set($name, $value, CookieSaltEncoder $salt, $expiration = NULL) {
         /*
          * Добавляяем соль к значению куки
          */
-        $salt = new CookieSaltEncoder($name, $value);
         $value = $salt->encode() . '~' . $value;
-        unset($salt);
         return setcookie($name, $value, Cookie::getExpiration($expiration), Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
     }
 
@@ -121,8 +119,7 @@ class Cookie {
      *
      * @return  string
      */
-    public static function get($key, $default = NULL) {
-        $salt = new CookieSaltEncoder(NULL, NULL);
+    public static function get($key, CookieSaltEncoder $salt, $default = NULL) {
         if (!isset($_COOKIE[$key])) {
             // Если куки нет, вернём значение по умолчанию
             return $default;
@@ -145,7 +142,6 @@ class Cookie {
             // Подпись куки не верна, удаляем куку
             Cookie::delete($key);
         }
-        unset($salt);
         return $default;
     }
 

@@ -47,7 +47,7 @@ class Preference {
      * Set property.
      */
 
-    public function setProperty($key, $val) {
+    public function set($key, $val) {
         $this->props[$key] = $val;
     }
 
@@ -56,7 +56,7 @@ class Preference {
      * Get property.
      */
 
-    public function getProperty($key) {
+    public function get($key) {
         return $this->props[$key];
     }
 

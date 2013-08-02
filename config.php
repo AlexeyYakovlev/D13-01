@@ -20,16 +20,14 @@ define('DB_DATABASE', 'D13_01');
 define('PDO_DSN', 'mysql:host=' . DB_SERVER . ';dbname=' . DB_DATABASE);
 
 /* НАСТРОЙКИ ПРОЕКТА */
-//инициализация ссылки на объект Preferences
-$pref = Preference::getInstance();
 //выборка всех параметров настройки из БД
 $sql = "select * from config";
 //установка параметров проекта как свойства объекта Preferences
 foreach (DBH::GetAll($sql) as $array) {
-    $pref->setProperty($array['name'], $array['value']);
+    Preference::getInstance()->set($array['name'], $array['value']);
 }
 //номер проекта
-define('PROJECT_NUMBER', $pref->getProperty('ProjectNumber'));
+define('PROJECT_NUMBER', Preference::getInstance()->get('ProjectNumber'));
 
 /* ПУТИ */
 // Корень проекта
